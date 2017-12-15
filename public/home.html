@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="stylesheet" type="text/css" media="all" href="stylesheet.css">
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	  <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="d3/d3.min.js"></script>
+	<script>
+  $(document).ready(function(){
+	getuserinfo();
+
+  });</script>
+  </head>
+
+  <body>
+  
+	
+	   <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+		<div id ="user-picture"></div>
+		<a class="navbar-brand" id= "username" href="#"></a>
+		<input type="text" name="ghusername" id ="ghusername" placeholder= "Enter Github username">
+        <a href="#" id="ghsubmitbtn">Search</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+	<div class="container" id = "mainBody">
+	<div class="row">
+  	<div class="col-md-6" id = "infoBox">
+    
+      <div class="panel panel-default">
+			<div class="panel-body">
+				<div class = "buffer">
+              		<div class="row">
+                        <div class="col-xs-12 col-sm-8">
+                            <h2 id = "nameHeading"></h2>
+                            <p><strong>Email: </strong> <text id = "ghEmail"> - </text></p>
+							<p><strong>Company: </strong> <text id = "ghCompany"> - </text></p>
+							<p><strong>Location: </strong> <text id = "ghLocation"> - </text></p>
+							<p><strong>Bio: </strong> <text id = "ghBio"> - </text></p>
+							<p><strong>ID: </strong> <text id = "ghID"> - </text></p>
+                        </div><!--/col-->          
+                        <div class="col-xs-12 col-sm-4 text-center">
+                                <div id = "ghPicture"></div>
+                        </div><!--/col-->
+
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong><text id = "ghFollowers">-</text></strong></h2>                    
+                            <p><small>Followers</small></p>
+                            <div id = "viewProfileButton"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong><text id = "ghFollowing">-</text></strong></h2>                    
+                            <p><small>Following</small></p>
+                           <div id= "viewFollowersButton"></div>
+                        </div><!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <h2><strong><text id = "ghNumberOfRepos">-</text></strong></h2>                    
+                            <p><small>Public Repos</small></p>
+                         
+                        </div><!--/col-->
+              		</div><!--/row-->
+				</div>
+              </div><!--/panel-body-->
+          </div><!--/panel-->
+
+    
+    
+    </div>
+	<div id ="graph1" class="col-md-6">
+		 <div class="panel panel-default">
+			<div class="panel-body">
+				<div class = "buffer">
+              		<div class="row">
+                        <div class="col-xs-12 col-sm-8">
+							<h2>Repos</h2>
+								<div id = "repos"></div>
+						</div><!--/col-->
+              		</div><!--/row-->
+				</div>
+              </div><!--/panel-body-->
+          </div><!--/panel-->		
+	</div>
+	
+  </div>
+</div>
+
+<div class="container" id = "mainBody">
+	<div class="row">
+		<div class="demo col-md-6">
+		<h2> Characters of Code </h2>
+			<div id="chart">	
+			</div>
+		</div>
+		<div class="demo col-md-6">
+			<h2> Select Repo: </h2>
+			<div id="repoChartNames"></div>
+		</div>
+	</div>
+	</div>
+	</body>
+	<script type="text/javascript" src="frontend.js"></script>
+	<script>
+		$('#ghsubmitbtn').on('click', function(e){
+			e.preventDefault();
+			var username = $('#ghusername').val();
+			var requri   = 'https://api.github.com/users/'+username;
+			var repouri  = 'https://api.github.com/users/'+username+'/repos';
+			
+			
+		
+			requestJSON(requri, function(json) {
+				if(json.message == "Not Found" || username == '') {
+					$('#nameHeading').html("<h2>No User Info Found</h2>");
+					changeData(json);
+				}
+				else {
+					changeData(json);	
+				}
+			});
+		});
+		
+	</script>
+</html>

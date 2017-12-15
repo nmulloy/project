@@ -1,0 +1,10 @@
+{
+	"name": "test",
+	"dependencies": {
+		"cookie-parser": "^1.4.3",
+		"express": "^4.16.2",
+		"passport": "^0.4.0",
+		"passport-github": "^1.1.0",
+		"request": "^2.83.0"
+	}
+}
